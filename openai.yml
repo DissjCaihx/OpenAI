@@ -1,0 +1,7 @@
+openai:
+  API_KEY: sdasdaa
+  BASE_URL: dsdsa
+  router:
+    models: /models
+    balance: /user/balance
+    completions: /chat/completions
