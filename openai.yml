@@ -1,6 +1,6 @@
 openai:
-  API_KEY: sdasdaa
-  BASE_URL: dsdsa
+  API_KEY: sk-49e2ba1915a44ec0aee09c027fa06e0d
+  BASE_URL: https://api.deepseek.com
   router:
     models: /models
     balance: /user/balance

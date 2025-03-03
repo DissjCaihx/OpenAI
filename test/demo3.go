@@ -7,7 +7,10 @@ import (
 
 func main() {
 	client := Client.Client{}
-	client.SetApiKey("adasjhdajkdnaks")
-	headers := client.GetHeaders()
-	fmt.Println(headers)
+	client.InitHeaders()
+	models, err := client.Models(nil)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(models)
 }

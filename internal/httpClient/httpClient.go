@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"time"
 )
@@ -76,6 +77,7 @@ func (h *HttpClient) GetJSON(url string, headers map[string]string) (map[string]
 	// 发送请求
 	resp, err := h.client.Do(req)
 	if err != nil {
+		log.Fatal("failed to send GET request: " + err.Error())
 		return nil, fmt.Errorf("failed to send GET request: %w", err)
 	}
 	defer resp.Body.Close()

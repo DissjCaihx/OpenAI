@@ -4,6 +4,7 @@ import (
 	"OpenAI/internal/httpClient"
 	"OpenAI/tools"
 	"fmt"
+	"time"
 )
 
 var (
@@ -56,8 +57,9 @@ func (c *Client) Models(var1 map[string]string) (map[string]interface{}, error) 
 	if c.header == nil {
 		c.InitHeaders()
 	}
-	router := config.Get("router").(map[string]interface{})
-	httpClient := httpClient.HttpClient{}
+	var openai = config.Get("openai").(map[string]interface{})
+	router := openai["router"].(map[string]interface{})
+	httpClient := httpClient.NewHttpClient(10 * time.Second)
 	get, _ := httpClient.GetJSON(c.BaseUrl+fmt.Sprintf("%s", router["models"]), c.header)
 	return get, nil
 }
