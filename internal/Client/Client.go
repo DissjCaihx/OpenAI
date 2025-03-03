@@ -2,6 +2,7 @@ package Client
 
 import (
 	"OpenAI/internal/httpClient"
+	"OpenAI/openai"
 	"OpenAI/tools"
 	"fmt"
 	"time"
@@ -25,7 +26,8 @@ type ClientImpl interface {
 	GetHeaders() map[string]string
 	Models(map[string]string) (map[string]interface{}, error)
 	Balance(map[string]string)
-	Completions(map[string]string)
+	//Completions(map[string]string)
+	Completions(c openai.Completions) (map[string]interface{}, error)
 }
 
 func (c *Client) Client() *Client {
@@ -67,4 +69,14 @@ func (c *Client) Models(var1 map[string]string) (map[string]interface{}, error) 
 func (c *Client) Balance(var1 map[string]string) {
 
 }
-func (c *Client) Completions(var1 map[string]string) {}
+func (c *Client) Completions(var1 *openai.Completions) (map[string]interface{}, error) {
+	if c.header == nil {
+		c.InitHeaders()
+	}
+	toMap := var1.ToMap()
+	var openai = config.Get("openai").(map[string]interface{})
+	router := openai["router"].(map[string]interface{})
+	httpClient := httpClient.NewHttpClient(10 * time.Second)
+	json, _ := httpClient.PostJSON(c.BaseUrl+fmt.Sprintf("%s", router["completions"]), c.header, toMap)
+	return json, nil
+}
