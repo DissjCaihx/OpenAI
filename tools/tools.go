@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"reflect"
 )
 
 // Config 结构体
@@ -108,4 +109,21 @@ func (c *Config) LoadFromYAML(filePath string) error {
 	c.propertySourceMap = make(map[string]interface{})
 	c.propertySourceMap = c.propertyMap
 	return nil
+}
+
+func CopyIsNotNull[M1 ~map[K]V, M2 ~map[K]V, K comparable, V any](dst M1, src M2) {
+	for k, v := range src {
+		if !reflect.ValueOf(v).IsZero() {
+			dst[k] = v
+		}
+	}
+
+}
+func CopyNotNullValueOf[M1 ~map[K]V, M2 ~map[K]V, K comparable, V any](dst M1, src M2) {
+	for k, v := range src {
+		if !reflect.ValueOf(v).IsZero() {
+			dst[k] = v
+		}
+	}
+
 }

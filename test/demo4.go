@@ -2,29 +2,13 @@ package main
 
 import (
 	"OpenAI/body"
-	"OpenAI/internal/Client"
+	"OpenAI/openai"
 	"fmt"
-	"time"
 )
 
-//import (
-//	"OpenAI/body"
-//	"OpenAI/internal/Client"
-//	"fmt"
-//	"time"
-//)
-
 func main() {
-	client := Client.Client{}
-	client.InitHeaders()
-	client.SetTimeSecond(30 * time.Second)
-	//models, err := client.Models()
-	//if err != nil {
-	//	panic(err)
-	//}
-	//fmt.Println(models)
-	bodyHead := body.HeaderBody{Accept: "application/json", ContentType: "application/json"}
-	client.SetHeaders(bodyHead)
+	ai := openai.OpenAI()
+	headBody := body.HeaderBody{Accept: "application/json", ContentType: "application/json"}
 	completions := body.Completions{
 		Messages: []map[string]interface{}{
 			{
@@ -56,8 +40,12 @@ func main() {
 			"top_logprobs":   "None",
 		},
 	}
-	m, err := client.Completions(completions)
+	ai.SetHeaders(headBody)
+	fmt.Println(completions)
+	//m, err := ai.Completions(completions)
+	m, err := ai.Models()
 	if err != nil {
+		panic(err)
 	}
 	fmt.Println(m)
 }

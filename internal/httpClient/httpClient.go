@@ -12,10 +12,10 @@ import (
 
 // Requester 接口定义
 type Requester interface {
-	Get(url string, headers map[string]string) ([]byte, error)
-	Post(url string, headers map[string]string, body interface{}) ([]byte, error)
-	GetJSON(url string, headers map[string]string) (map[string]interface{}, error)
-	PostJSON(url string, headers map[string]string, body interface{}) (map[string]interface{}, error)
+	Get(url string, headers map[string]interface{}) ([]byte, error)
+	Post(url string, headers map[string]interface{}, body interface{}) ([]byte, error)
+	GetJSON(url string, headers map[string]interface{}) (map[string]interface{}, error)
+	PostJSON(url string, headers map[string]interface{}, body interface{}) (map[string]interface{}, error)
 }
 
 // HttpClient 结构体
@@ -33,7 +33,7 @@ func NewHttpClient(timeout time.Duration) *HttpClient {
 }
 
 // Get 方法实现
-func (h *HttpClient) Get(url string, headers map[string]string) ([]byte, error) {
+func (h *HttpClient) Get(url string, headers map[string]interface{}) ([]byte, error) {
 	// 创建请求
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -42,7 +42,7 @@ func (h *HttpClient) Get(url string, headers map[string]string) ([]byte, error) 
 
 	// 设置请求头
 	for key, value := range headers {
-		req.Header.Set(key, value)
+		req.Header.Set(key, value.(string))
 	}
 
 	// 发送请求
@@ -62,7 +62,7 @@ func (h *HttpClient) Get(url string, headers map[string]string) ([]byte, error) 
 }
 
 // GetJSON 方法实现
-func (h *HttpClient) GetJSON(url string, headers map[string]string) (map[string]interface{}, error) {
+func (h *HttpClient) GetJSON(url string, headers map[string]interface{}) (map[string]interface{}, error) {
 	// 创建请求
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -71,7 +71,7 @@ func (h *HttpClient) GetJSON(url string, headers map[string]string) (map[string]
 
 	// 设置请求头
 	for key, value := range headers {
-		req.Header.Set(key, value)
+		req.Header.Set(key, value.(string))
 	}
 
 	// 发送请求
@@ -97,7 +97,7 @@ func (h *HttpClient) GetJSON(url string, headers map[string]string) (map[string]
 }
 
 // Post 方法实现
-func (h *HttpClient) Post(url string, headers map[string]string, body interface{}) ([]byte, error) {
+func (h *HttpClient) Post(url string, headers map[string]interface{}, body interface{}) ([]byte, error) {
 	// 将 body 转换为 JSON
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
@@ -113,7 +113,7 @@ func (h *HttpClient) Post(url string, headers map[string]string, body interface{
 	// 设置请求头
 	req.Header.Set("Content-Type", "application/json")
 	for key, value := range headers {
-		req.Header.Set(key, value)
+		req.Header.Set(key, value.(string))
 	}
 
 	// 发送请求
@@ -133,7 +133,7 @@ func (h *HttpClient) Post(url string, headers map[string]string, body interface{
 }
 
 // Post 方法实现
-func (h *HttpClient) PostJSON(url string, headers map[string]string, body interface{}) (map[string]interface{}, error) {
+func (h *HttpClient) PostJSON(url string, headers map[string]interface{}, body interface{}) (map[string]interface{}, error) {
 	// 将 body 转换为 JSON
 	jsonBody, err := json.Marshal(body)
 	if err != nil {
@@ -149,7 +149,7 @@ func (h *HttpClient) PostJSON(url string, headers map[string]string, body interf
 	// 设置请求头
 	req.Header.Set("Content-Type", "application/json")
 	for key, value := range headers {
-		req.Header.Set(key, value)
+		req.Header.Set(key, value.(string))
 	}
 
 	// 发送请求
@@ -181,7 +181,7 @@ func main() {
 
 	// 使用 GET 请求
 	url := "https://jsonplaceholder.typicode.com/posts/1"
-	headers := map[string]string{
+	headers := map[string]interface{}{
 		"Accept": "application/json",
 	}
 
@@ -194,7 +194,7 @@ func main() {
 
 	// 使用 POST 请求
 	postUrl := "https://jsonplaceholder.typicode.com/posts"
-	postHeaders := map[string]string{
+	postHeaders := map[string]interface{}{
 		"Accept":       "application/json",
 		"Content-Type": "application/json",
 	}
