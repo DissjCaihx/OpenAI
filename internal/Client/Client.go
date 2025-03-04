@@ -42,7 +42,7 @@ func (c *Client) SetTimeSecond(timeSecond time.Duration) {
 }
 func (c *Client) SetHeaders(h body.HeaderBody) {
 	//c.header = h.ToMap()
-	c.header = map[string]interface{}{}
+	//c.header = map[string]interface{}{}
 	tools.CopyIsNotNull(c.header, h.ToMap())
 }
 func (c *Client) GetHeaders() map[string]interface{} {
@@ -66,6 +66,7 @@ func (c *Client) InitHeaders() {
 }
 func (c *Client) SetApiKey(apiKey string) {
 	c.ApiKey = apiKey
+	c.header["Authorization"] = "Bearer " + apiKey
 }
 func (c *Client) SetBaseUrl(baseUrl string) {
 	c.BaseUrl = baseUrl

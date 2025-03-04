@@ -7,7 +7,7 @@ func main() {
 	fmt.Println("Hello World")
 	//newConfig := &tools.Config{
 	//	Path:     "D:/GoProject/OpenAI/",
-	//	FileName: "openai.yml",
+	//	FileName: "openai-t.yml",
 	//}
 
 	config := tools.DefaultConfig()

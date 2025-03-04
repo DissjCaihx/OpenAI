@@ -48,6 +48,7 @@ func (o *openAI) SetHeaders(h body.HeaderBody) {
 }
 func (o *openAI) SetApiKey(apiKey string) {
 	o.apiKey = apiKey
+	o.header.Authorization = "Bearer " + apiKey
 	o.client.SetApiKey(apiKey)
 }
 func (o *openAI) SetBaseUrl(baseUrl string) {

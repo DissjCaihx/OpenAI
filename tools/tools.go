@@ -56,18 +56,20 @@ func (c *Config) getDefault() *Config {
 	_, err := os.Stat(c.Path + c.FileName)
 	if err != nil {
 		if os.IsNotExist(err) {
-			config := DefaultConfig()
+			//config := DefaultConfig()
 			var configMap = make(map[string]interface{})
 			var routerMap = make(map[string]interface{})
-			config.propertyMap = make(map[string]interface{})
+			c.propertyMap = make(map[string]interface{})
+			c.propertySourceMap = make(map[string]interface{})
 			configMap["API_KEY"] = ""
 			configMap["BASE_URL"] = "http://127.0.0.1/"
 			routerMap["models"] = "/models"
 			routerMap["balance"] = "/user/balance"
 			routerMap["completions"] = "/chat/completions"
-			configMap["routes"] = routerMap
-			config.propertyMap["openai"] = configMap
-			return config
+			configMap["router"] = routerMap
+			c.propertyMap["openai"] = configMap
+			CopyIsNotNull(c.propertySourceMap, c.propertyMap)
+			return c
 		}
 	}
 	return c

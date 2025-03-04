@@ -147,7 +147,7 @@ func (h *HttpClient) PostJSON(url string, headers map[string]interface{}, body i
 	}
 
 	// 设置请求头
-	req.Header.Set("Content-Type", "application/json")
+	//req.Header.Set("Content-Type", "application/json")
 	for key, value := range headers {
 		req.Header.Set(key, value.(string))
 	}

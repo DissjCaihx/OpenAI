@@ -10,6 +10,11 @@ type RequestBody interface {
 	ToParam() map[string]interface{}
 	SetHeaders(map[string]interface{})
 }
+type OpanAiParameters interface {
+	Deepseek(string, []map[string]interface{}) Completions
+}
+type CreateCompletions struct {
+}
 
 type Completions struct {
 	Messages         []map[string]interface{}
@@ -21,6 +26,30 @@ type Completions struct {
 	OtherParam       map[string]interface{}
 }
 
+func (c *CreateCompletions) Deepseek(module string, message []map[string]interface{}) Completions {
+	return Completions{
+		Messages:    message,
+		Model:       module,
+		MaxTokens:   2048,
+		Temperature: 0.7,
+		Stream:      false,
+		OtherParam: map[string]interface{}{
+			"frequency_penalty": 0,
+			"presence_penalty":  0,
+			"response_format": map[string]interface{}{
+				"type": "text",
+			},
+			"stop":           nil,
+			"stream_options": nil,
+			"temperature":    1,
+			"top_p":          1,
+			"tools":          nil,
+			"tool_choice":    "none",
+			"logprobs":       false,
+			"top_logprobs":   nil,
+		},
+	}
+}
 func (c *Completions) SetOtherParam(var1 map[string]interface{}) {
 	c.OtherParam = var1
 }
