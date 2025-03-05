@@ -1,9 +1,9 @@
 package openai
 
 import (
-	"OpenAI/body"
-	"OpenAI/internal/Client"
-	"OpenAI/tools"
+	"github.com/DissjCaihx/OpenAI/body"
+	"github.com/DissjCaihx/OpenAI/internal/Client"
+	"github.com/DissjCaihx/OpenAI/tools"
 	"time"
 )
 

@@ -1,10 +1,10 @@
 package Client
 
 import (
-	"OpenAI/body"
-	"OpenAI/internal/httpClient"
-	"OpenAI/tools"
 	"fmt"
+	"github.com/DissjCaihx/OpenAI/body"
+	"github.com/DissjCaihx/OpenAI/internal/httpClient"
+	"github.com/DissjCaihx/OpenAI/tools"
 	"time"
 )
 
