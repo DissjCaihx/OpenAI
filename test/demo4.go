@@ -8,7 +8,7 @@ import (
 
 func main() {
 	ai := openai.OpenAI()
-	ai.SetApiKey("sk-49e2ba1915a44ec0aee09c027fa06e0d")
+	ai.SetApiKey("")
 	ai.SetBaseUrl("https://api.deepseek.com")
 	headBody := body.HeaderBody{Accept: "application/json", ContentType: "application/json"}
 	completions := body.Completions{

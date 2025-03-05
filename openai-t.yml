@@ -1,5 +1,5 @@
 openai:
-  API_KEY: sk-49e2ba1915a44ec0aee09c027fa06e0d
+  API_KEY: sk-
   BASE_URL: https://api.deepseek.com
   router:
     models: /models

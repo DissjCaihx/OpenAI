@@ -50,7 +50,7 @@ func main() {
 	}
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Authorization", "Bearer sk-49e2ba1915a44ec0aee09c027fa06e0d")
+	req.Header.Add("Authorization", "Bearer ")
 
 	res, err := client.Do(req)
 	if err != nil {
