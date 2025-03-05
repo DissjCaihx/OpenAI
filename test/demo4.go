@@ -1,9 +1,9 @@
 package main
 
 import (
-	"OpenAI/body"
-	"OpenAI/openai"
 	"fmt"
+	"github.com/DissjCaihx/OpenAI/body"
+	"github.com/DissjCaihx/OpenAI/openai"
 )
 
 func main() {
@@ -11,17 +11,11 @@ func main() {
 	ai.SetApiKey("")
 	ai.SetBaseUrl("https://api.deepseek.com")
 	headBody := body.HeaderBody{Accept: "application/json", ContentType: "application/json"}
+	messageBody := body.MessageBody{}
+	messageBody.Push(body.Message{Content: "You are a helpful assistant", Role: "system"},
+		body.Message{Content: "Hi", Role: "user"})
 	completions := body.Completions{
-		Messages: []map[string]interface{}{
-			{
-				"content": "You are a helpful assistant",
-				"role":    "system",
-			},
-			{
-				"content": "Hi",
-				"role":    "user",
-			},
-		},
+		Messages:    messageBody.ForMessage(),
 		Model:       "deepseek-chat",
 		MaxTokens:   2048,
 		Temperature: 0.7,

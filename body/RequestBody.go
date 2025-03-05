@@ -1,6 +1,8 @@
 package body
 
 import (
+	"encoding/json"
+	"fmt"
 	"maps"
 )
 
@@ -24,6 +26,42 @@ type Completions struct {
 	Stream           bool
 	Temperature      float64
 	OtherParam       map[string]interface{}
+}
+type MessageBody struct {
+	messages []Message
+}
+
+type Message struct {
+	Content string `json:"content"`
+	Role    string `json:"role"`
+}
+type MessageBodyImpl interface {
+	Add(message Message)
+	PushAll(messages []Message)
+	Push(messages ...Message)
+	ForMessage() []map[string]interface{}
+}
+
+func (m *MessageBody) PushAll(messages []Message) {
+	m.messages = append(m.messages, messages...)
+}
+func (m *MessageBody) Push(messages ...Message) {
+	m.messages = append(m.messages, messages...)
+}
+func (m *MessageBody) Add(message Message) {
+	m.messages = append(m.messages, message)
+}
+func (m *MessageBody) ForMessage() []map[string]interface{} {
+	msg, err := json.Marshal(m.messages)
+	if err != nil {
+		fmt.Errorf(err.Error())
+	}
+	var result []map[string]interface{}
+	err = json.Unmarshal(msg, &result)
+	if err != nil {
+		fmt.Errorf(err.Error())
+	}
+	return result
 }
 
 func (c *CreateCompletions) Deepseek(module string, message []map[string]interface{}) Completions {
