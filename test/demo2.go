@@ -1,6 +1,6 @@
 package main
 
-import "OpenAI/internal/Client"
+import "github.com/DissjCaihx/OpenAI/internal/Client"
 
 func main() {
 
