@@ -92,14 +92,12 @@ func (h *HeaderBody) ToMap() map[string]interface{} {
 	param := map[string]interface{}{
 		"Content-Type": h.ContentType,
 		"Accept":       h.Accept,
-		//"authorization": "Bearer " + h.Authorization,
 	}
 	maps.Copy(param, h.Headers)
 	return param
 }
 func (h *HeaderBody) SetHeaders(var1 map[string]interface{}) {
 	h.Headers = var1
-	//tools.Copy(h.Headers, var1)
 }
 func (h *HeaderBody) ToParam() map[string]interface{} {
 	param := map[string]interface{}{}

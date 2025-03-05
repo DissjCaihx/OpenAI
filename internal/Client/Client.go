@@ -8,10 +8,6 @@ import (
 	"time"
 )
 
-//var (
-//	config = tools.DefaultConfig()
-//)
-
 type Client struct {
 	ApiKey     string
 	BaseUrl    string
@@ -41,8 +37,6 @@ func (c *Client) SetTimeSecond(timeSecond time.Duration) {
 	c.TimeSecond = timeSecond
 }
 func (c *Client) SetHeaders(h body.HeaderBody) {
-	//c.header = h.ToMap()
-	//c.header = map[string]interface{}{}
 	tools.CopyIsNotNull(c.header, h.ToMap())
 }
 func (c *Client) GetHeaders() map[string]interface{} {

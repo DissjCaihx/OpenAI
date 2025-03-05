@@ -180,7 +180,7 @@ func main() {
 	client := NewHttpClient(10 * time.Second)
 
 	// 使用 GET 请求
-	url := "https://jsonplaceholder.typicode.com/posts/1"
+	url := "https://127.0.0.1/"
 	headers := map[string]interface{}{
 		"Accept": "application/json",
 	}
@@ -193,7 +193,7 @@ func main() {
 	fmt.Println("GET response:", string(response))
 
 	// 使用 POST 请求
-	postUrl := "https://jsonplaceholder.typicode.com/posts"
+	postUrl := "https://127.0.0.1//posts"
 	postHeaders := map[string]interface{}{
 		"Accept":       "application/json",
 		"Content-Type": "application/json",

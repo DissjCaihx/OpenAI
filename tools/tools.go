@@ -10,48 +10,28 @@ import (
 	"reflect"
 )
 
-// Config 结构体
 type Config struct {
 	Path              string
 	FileName          string
 	propertyMap       map[string]interface{}
 	propertySourceMap map[string]interface{}
 }
-type (
-	// handlerYamlProperty 接口
-	handlerYamlProperty interface {
-		get(key string) interface{}
-		set(key string, value interface{})
-		SetDefault(*Config)
-		GetDefault() *Config
-		loadProperties() *Config
-	}
-)
 
-// 默认配置
-func DefaultConfig() *Config {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
-	}
-	return &Config{
-		Path:     dir,
-		FileName: "openai.yml",
-	}
+type HandlerYamlProperty interface {
+	Get(key string) interface{}
+	Set(key string, value interface{})
+	getDefault() *Config
+	LoadProperties() *Config
 }
 
-// 实现 handlerYamlProperty 接口
-// Get 方法
 func (c *Config) Get(key string) interface{} {
 	return c.propertyMap[key]
 }
 
-// Set 方法
 func (c *Config) Set(key string, value interface{}) {
 	c.propertyMap[key] = value
 }
 
-// getDefault 方法
 func (c *Config) getDefault() *Config {
 	_, err := os.Stat(c.Path + c.FileName)
 	if err != nil {
@@ -75,14 +55,12 @@ func (c *Config) getDefault() *Config {
 	return c
 }
 
-// LoadProperties 方法
 func (c *Config) LoadProperties() *Config {
 	defaultConfig := c.getDefault()
 	if defaultConfig == nil {
 		return nil
 	}
 	log.Printf("load file path:" + defaultConfig.FileName)
-	// 加载 YAML 文件
 	yamlPath := filepath.Join(defaultConfig.Path, defaultConfig.FileName)
 	if err := c.LoadFromYAML(yamlPath); err != nil {
 		log.Printf("Failed to load YAML file: %v\n", err)
@@ -92,19 +70,16 @@ func (c *Config) LoadProperties() *Config {
 	return c
 }
 
-// LoadFromYAML 从 YAML 文件加载配置
 func (c *Config) LoadFromYAML(filePath string) error {
 	// 读取文件
 	data, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		if os.IsNotExist(err) {
-			//log.Printf("YAML file not found, using default config: %s\n", filePath)
 			return nil
 		}
 		return fmt.Errorf("failed to read YAML file: %w", err)
 	}
 
-	// 解析 YAML 到 propertyMap
 	if err := yaml.Unmarshal(data, &c.propertyMap); err != nil {
 		return fmt.Errorf("failed to parse YAML file: %w", err)
 	}
@@ -128,4 +103,16 @@ func CopyNotNullValueOf[M1 ~map[K]V, M2 ~map[K]V, K comparable, V any](dst M1, s
 		}
 	}
 
+}
+
+// 默认配置
+func DefaultConfig() *Config {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return &Config{
+		Path:     dir,
+		FileName: "openai.yml",
+	}
 }
