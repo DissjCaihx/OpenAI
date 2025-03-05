@@ -224,7 +224,7 @@ func main() {
 ```
 ## example 03
 * Create an open.xml file in the root directory of the project
-[![Create an open.xml file](/Volumes/caihx/projects/OpenAI/test/img.png)]
+[![Create an open.xml file]([/Volumes/caihx/projects/OpenAI/test/img.png](https://github.com/DissjCaihx/OpenAI/blob/master/test/img.png))]
 ```yaml
 openai:
   API_KEY: sk-
