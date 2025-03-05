@@ -1,4 +1,4 @@
-# OpenAI GoLang
+# Go OpenAI 
 
 This is a golang third party open source library.Provide a user-friendly API for the operation of large AI models.
 
