@@ -1,4 +1,4 @@
-module github.com/DissjCaihx/OpenAI
+module OpenAI
 
 go 1.23
 
