@@ -10,7 +10,7 @@ import (
 	"reflect"
 )
 
-type config struct {
+type Config struct {
 	Path              string
 	FileName          string
 	propertyMap       map[string]interface{}
@@ -20,19 +20,19 @@ type config struct {
 type HandlerYamlProperty interface {
 	Get(key string) interface{}
 	Set(key string, value interface{})
-	getDefault() *config
-	LoadProperties() *config
+	getDefault() *Config
+	LoadProperties() *Config
 }
 
-func (c *config) Get(key string) interface{} {
+func (c *Config) Get(key string) interface{} {
 	return c.propertyMap[key]
 }
 
-func (c *config) Set(key string, value interface{}) {
+func (c *Config) Set(key string, value interface{}) {
 	c.propertyMap[key] = value
 }
 
-func (c *config) getDefault() *config {
+func (c *Config) getDefault() *Config {
 	_, err := os.Stat(c.Path + c.FileName)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -54,7 +54,7 @@ func (c *config) getDefault() *config {
 	return c
 }
 
-func (c *config) LoadProperties() *config {
+func (c *Config) LoadProperties() *Config {
 	defaultConfig := c.getDefault()
 	if defaultConfig == nil {
 		return nil
@@ -69,7 +69,7 @@ func (c *config) LoadProperties() *config {
 	return c
 }
 
-func (c *config) LoadFromYAML(filePath string) error {
+func (c *Config) LoadFromYAML(filePath string) error {
 	// 读取文件
 	data, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -97,12 +97,12 @@ func CopyIsNotNull[M1 ~map[K]V, M2 ~map[K]V, K comparable, V any](dst M1, src M2
 }
 
 // 默认配置
-func DefaultConfig() *config {
+func DefaultConfig() *Config {
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
-	return &config{
+	return &Config{
 		Path:     dir,
 		FileName: "openai.yml",
 		propertyMap: map[string]interface{}{
